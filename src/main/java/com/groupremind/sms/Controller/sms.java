@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.twilio.Twilio;
@@ -19,11 +20,13 @@ public class sms{
 
 
     @GetMapping(value = "/sendSMS")
-    public ResponseEntity<String> sendSMS() {
+    public ResponseEntity<String> sendSMS(@RequestBody String messageText) {
 
         Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
 
+        //TO number
         Message.creator(new PhoneNumber(""),
+                //FROM Number
                 new PhoneNumber(""), "Hello from Twilio 📞").create();
 
         return new ResponseEntity<String>("Message sent successfully", HttpStatus.OK);
